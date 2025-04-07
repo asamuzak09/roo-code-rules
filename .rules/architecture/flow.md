@@ -7,6 +7,7 @@
 
 ## 2. 要件定義
 - `requirements_definition.md`を参考に要件定義を行う
+- `document-list.md`に定義されたドキュメントがすでに存在した場合、足りない情報のみをユーザーに質問する
 
 ## 3.ドキュメントの作成
 - `document-list.md`を参考に要件定義を行う
