@@ -9,11 +9,13 @@
 
 ## 2. 機能一覧
 - **概要**: 各機能の概要、連携関係、実装概要について記載。
-- **配置場所**: `docs/architecture/features.md`
+  例: `docs/architecture/features/coupon.md`
+- **配置場所**: 各機能ごとに、`docs/architecture/features/` 以下に個別ファイルとして作成してください。
 
 ## 3. 画面一覧
 - **概要**: 各画面の構成、遷移フロー、利用シーンについて記載。
-- **配置場所**: `docs/architecture/screens.md`
+  例: `docs/architecture/screens/payment.md`
+- **配置場所**: 各画面ごとに、`docs/architecture/screens/` 以下に個別ファイルとして作成してください。
 
 ## 4. DBテーブル定義書
 - **概要**: 各テーブルのカラム、データ型、制約、リレーション情報について記載。
@@ -21,5 +23,9 @@
 
 ## 5. 実施するタスク一覧 (YYYY-MM-DD-TaskName形式)
 - **概要**: 設計フェーズにおいて実施する各タスクを、日付とタスク名の形式で管理します。  
-  例: `2025-04-06-InitialDesignReview.md`
+  例: `2025-04-06-initial_design_review.md`
 - **配置場所**: 各タスクごとに、`docs/architecture/task` 以下に個別ファイルとして作成してください。
+
+------
+
+**タスクのドキュメントを必ず一番最初に作成してください**
