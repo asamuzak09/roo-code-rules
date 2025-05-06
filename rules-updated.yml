@@ -1,0 +1,34 @@
+name: dispatch roo code rules updated
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".roo/rules/**"
+      - ".roo/rules-*/**"
+      - ".roomodes"
+  workflow_dispatch:
+jobs:
+  dispatch-target-updated:
+    strategy:
+      matrix:
+        repo:
+          [
+            "", # 同期先のリポジトリ名 
+          ]
+    name: dispatch-target-updated
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub App token
+        id: create_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.REPOSITORY_LINKAGE_APP_ID }}
+          private-key: ${{ secrets.REPOSITORY_LINKAGE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - name: dispatch rules-updated
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.create_token.outputs.token }}
+          repository: ${{ matrix.repo }}
+          event-type: rules-updated

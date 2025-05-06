@@ -1,0 +1,66 @@
+name: sync roo code rules from roo-code-rules
+on:
+  repository_dispatch:
+    types: [rules-updated]
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set repository name
+        id: repo-name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub App token
+        id: create_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.REPOSITORY_LINKAGE_APP_ID }}
+          private-key: ${{ secrets.REPOSITORY_LINKAGE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ steps.repo-name.outputs.REPO_NAME }}
+            roo-code-rules
+      - name: Checkout ${{ steps.repo-name.outputs.REPO_NAME }}
+        uses: actions/checkout@v4
+        with:
+          repository: # 同期先のリポジトリ名
+          path: ${{ steps.repo-name.outputs.REPO_NAME }}
+          token: ${{ steps.create_token.outputs.token }}
+      - name: Checkout roo-code-rules
+        uses: actions/checkout@v4
+        with:
+          repository: # roo-code-rulesのリポジトリ名
+          path: roo-code-rules
+          token: ${{ steps.create_token.outputs.token }}
+      - name: Sync rules using Makefile
+        working-directory: roo-code-rules
+        run: |          
+          # Makefileを使用してルールを同期
+          make sync-rules REPO_NAME="${{ steps.repo-name.outputs.REPO_NAME }}"
+      - name: create PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          path: ${{ steps.repo-name.outputs.REPO_NAME }}
+          token: ${{ steps.create_token.outputs.token }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: "sync: update code rules and configuration files from roo-code-rules"
+          branch: rules-updated
+          branch-suffix: timestamp
+          delete-branch: true
+          title: "[auto-sync] updated code rules and configuration files"
+          body: >
+            ## [自動同期されたPR] コードルールと設定ファイルの更新
+
+            ### 概要
+
+            このPRは roo-code-rules の更新によって自動同期されました。
+            以下のファイル/ディレクトリが更新されています：
+            - `.roo/`
+            - `.roomodes`
+
+            ### Merge前に確認すること
+
+            - [ ] 更新されたコードルールに問題がないか確認した
+            - [ ] 設定ファイルが正しく同期されているか確認した
+            - [ ] CIがパスしている
