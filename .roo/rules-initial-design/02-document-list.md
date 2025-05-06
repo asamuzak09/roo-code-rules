@@ -222,7 +222,7 @@ graph LR
 - **path**: `docs/references/` 以下に個別フォルダ・ファイルとして作成してください。
 - **概要**: フレームワークやライブラリのリファレンスや、アプリケーションが満たすべき標準規格の仕様をdocs/references/に集約する
 - **詳細ルール**:
-  - 標準規格（{規格名}）.mdは下記のフォーマットにしたがってください
+  - 標準規格（{規格名}.md)は下記のフォーマットにしたがってください
     - 規格の概要と目的
     - 規格の技術仕様の詳細
       - 項目など
@@ -253,10 +253,4 @@ graph LR
   - `docs/{project名}/tasks/%Y-%m-%d-タスク名/task.md`
   - `docs/{project名}/tasks/%Y-%m-%d-タスク名/feature.md`
 - **概要**: 設計フェーズにおいて実施する各タスクを、日付+タスク名の形式で管理します。
-  例: タスク概要を`docs/linebot-service/tasks/2025-04-06-initial-design-review/task.md`に記載し、タスクを実装する上での機能要件を`docs/linebot-service/tasks/2025-04-06-initial-design-review/feature.md`に記載
-
-- **詳細ルール**:
-  - タスクのステータスの種類は以下の通りです。
-    - DOING：タスクが進行中
-    - DONE：記載されているタスクが**すべて**完了
-    - ARCHIVE：タスクファイルが古くなった
+  例: タスク概要を`docs/{project名}/tasks/2025-04-06-initial-design-review/task.md`に記載し、タスクを実装する上での機能要件を`docs/{project名}/tasks/2025-04-06-initial-design-review/feature.md`に記載
