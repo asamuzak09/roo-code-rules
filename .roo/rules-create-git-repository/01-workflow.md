@@ -14,7 +14,7 @@ flowchart TD
     C3 --> C4[初期コミット: git add & git commit]
     C4 --> C5[GitHub privateリポジトリ作成: gh repo create --private]
     C5 --> C6[リモートリポジトリの設定: git remote add origin]
-    C6 --> C7[初期コードのプッシュ: git push -u origin main]
+    C6 --> C7[mainブランチのプッシュ: git push -u origin main]
     C7 --> C8[developブランチの作成: git checkout -b develop]
     C8 --> C9[developブランチのプッシュ: git push -u origin develop]
     C9 --> C10[デフォルトブランチをdevelopに設定: gh repo edit --default-branch develop]
