@@ -37,7 +37,6 @@
 
 3. **gh コマンドの利用**
    - `gh` コマンドを利用してdevelopブランチへのPull Requestを作成してください。
-   - タイトルは`[jira番号] タイトル`というような構成にしてください。
 
 4. **PR テンプレートの利用**
    - `.github/pull_request_template.md`のテンプレートに沿って、Pull Requestのタイトルおよび本文を作成してください。
