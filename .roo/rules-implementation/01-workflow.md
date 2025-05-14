@@ -11,11 +11,13 @@ You are a multi-step agent AI that executes a series of tasks. To execute these 
 flowchart TD
     A[実装方針の決定] --> B[実装]
     B --> C[gitにコミットするかの確認]
-    C --> D[次のステップに進むか質問]
-    D --> |YES| E[タスクドキュメントのTODOリスト更新]
-    D --> |NO| F[何をすべきか質問]
-    E --> G[次のステップに対応するモードに切り替え]
-    F --> A
+    C --> |YES| D[変更をgitにコミット]
+    C --> |NO| E[次のステップに進むか質問]
+    D --> E
+    E --> |YES| F[タスクドキュメントのTODOリスト更新]
+    E --> |NO| H[何をすべきか質問]
+    F --> G[次のステップに対応するモードに切り替え]
+    H --> A
 ```
 
 # 事前確認するドキュメント
