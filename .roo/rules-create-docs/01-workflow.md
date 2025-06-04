@@ -11,13 +11,14 @@ You are a multi-step agent AI that executes a series of tasks. To execute these 
 
 ```mermaid
 flowchart TD
-    A[プロジェクト要件の確認] --> B[プロジェクト構造の決定]
-    B --> BG_ROOT[ルートgitignoreの作成<br>.gitignore]
-    BG_ROOT --> BG_PROJECT[プロジェクト別gitignoreの作成<br>{project名}/.gitignore]
-    BG_PROJECT --> C[ドキュメント構造の設計]
+    A[プロジェクト要件の確認] --> B[プロジェクト構造の分析]
+    B --> C[ドキュメント構造の設計]
+
+    %% 既存ドキュメントの確認
+    C --> D0[既存ドキュメントの確認]
 
     %% ドキュメント作成フロー
-    C --> D1[要件定義書の作成<br>docs/requirements.md]
+    D0 --> D1[要件定義書の作成<br>docs/requirements.md]
     D1 --> D2[README.mdの作成<br>docs/README.md]
 
     %% プロジェクト固有ドキュメント
@@ -51,11 +52,12 @@ flowchart TD
 
 # 事前確認するドキュメント
 
-- `.roo/rules-task-design/02-document-list.md`
+- `.roo/rules-initial-design/02-document-list.md`
 
 # 注意事項
 
-- 作成するドキュメントの詳細は`.roo/rules-task-design/02-document-list.md`に準拠してください。
+- 作成するドキュメントの詳細は`.roo/rules-initial-design/02-document-list.md`に準拠してください。
+- 既存のドキュメントがある場合は、それを尊重しつつ、不足しているドキュメントを補完してください。
 
 # ドキュメント作成の詳細手順
 
@@ -66,49 +68,38 @@ flowchart TD
 - 非機能要件を確認する
 - ステークホルダーの特定と要望の整理
 
-## 2. プロジェクト構造の決定
+## 2. プロジェクト構造の分析
 
-- monorepo 構成かどうかを決定する
-- プロジェクト名を決定する
-- ディレクトリ構造を計画する
-- 開発言語やフレームワークの確認
+- プロジェクトのディレクトリ構造を分析する
+- 使用している言語やフレームワークを特定する
+- プロジェクトの依存関係を確認する
+- プロジェクトの設定ファイルを確認する
 
-## 3. .gitignoreの作成
+## 3. ドキュメント構造の設計
 
-### ルート .gitignore (`./.gitignore`)
+- 必要なドキュメントの種類を特定
+- ドキュメント間の依存関係を整理
+- ドキュメントの命名規則を決定
+- ドキュメントのテンプレートを準備
 
-    - リポジトリ全体で無視する共通ファイルを指定します。
-    - OS固有のファイル（例: `.DS_Store`, `Thumbs.db`）
-    - IDEやエディタ全体の設定ファイル（例: `.idea/` ※プロジェクトごとの設定はプロジェクト配下で管理推奨）
-    - その他、リポジトリ全体でバージョン管理対象外とするもの（例: `*.log`, `tmp/`）
+## 4. 既存ドキュメントの確認
 
-### プロジェクト別 .gitignore (`{project名}/.gitignore`)
-
-    - 各プロジェクト固有の無視ファイルリストを作成します。
-    - プロジェクトの技術スタックに応じた無視ファイル（例: Pythonプロジェクトなら `__pycache__/`, `*.pyc`, `venv/` など）
-    - プロジェクト固有のビルド成果物（例: `build/`, `dist/`）
-    - プロジェクト固有のログファイルや一時ファイル
-    - プロジェクト固有のIDE設定ファイル（例: `.vscode/` ※ルートで全体設定を無視していない場合）
-    - プロジェクト固有の依存関係ディレクトリ（例: `node_modules/` ※プロジェクトごとに管理する場合）
-
-## 4. ドキュメント構造の設計
-
-    - 必要なドキュメントの種類を特定
-    - ドキュメント間の依存関係を整理
-    - ドキュメントの命名規則を決定
-    - ドキュメントのテンプレートを準備
+- 既存のドキュメントを確認する
+- 既存のドキュメントの内容を分析する
+- 不足しているドキュメントを特定する
+- 既存のドキュメントの更新が必要かどうかを判断する
 
 ## 5. 基本ドキュメントの作成
 
 - **要件定義書 (docs/requirements.md)**
 - **README.md (docs/README.md)**
 
-## 5. プロジェクト固有ドキュメントの作成
+## 6. プロジェクト固有ドキュメントの作成
 
 - **仕様書 (docs/{project名}/specification.md)**
 - **機能一覧 (docs/{project名}/feature-list.md)**
 
-## 6. アーキテクチャドキュメントの作成
+## 7. アーキテクチャドキュメントの作成
 
 - **全体アーキテクチャ (docs/architecture/architecture.md)**
 - **全体インフラ構成 (docs/architecture/infra.md)**
@@ -116,24 +107,24 @@ flowchart TD
 - **DB 定義 (docs/{project名}/architecture/db-definition.md)**
 - **プロジェクトインフラ構成 (docs/{project名}/architecture/infra.md)**
 
-## 7. 画面設計ドキュメントの作成
+## 8. 画面設計ドキュメントの作成
 
 - **画面フロー (docs/{project名}/screens/flow.md)**
 - **各画面詳細 (docs/{project名}/screens/{画面名}.md)**
 
-## 8. リファレンス資料の作成
+## 9. リファレンス資料の作成
 
 - **フレームワーク・ライブラリリファレンス (docs/references/{ライブラリ名}/)**
 - **標準規格 (docs/references/{規格名}.md)**
 
-## 9. ドキュメント全体のレビューと修正
+## 10. ドキュメント全体のレビューと修正
 
 - 全ドキュメントの整合性確認
 - 不足している情報の追加
 - 冗長な部分の削除または簡略化
 - 最終確認と修正
 
-## 10. 完了処理
+## 11. 完了処理
 
-- git status & git commit
+- git statusでの確認 & git commit
 - 次のステップへの移行確認
