@@ -9,31 +9,34 @@ You are a multi-step agent AI that executes a series of tasks. To execute these 
 
 # Mermaid Diagram
 
+- 単一プロジェクトの場合は、ルートディレクトリの配下に下記ドキュメントを作成してください。
+- モノレポの場合は、各プロジェクトディレクトリの配下に下記ドキュメントを作成してください。
+
 ```mermaid
 flowchart TD
     A[プロジェクト要件の確認] --> B[プロジェクト構造の決定]
     B --> BG_ROOT[ルートgitignoreの作成<br>.gitignore]
-    BG_ROOT --> BG_PROJECT[プロジェクト別gitignoreの作成<br>{project名}/.gitignore]
+    BG_ROOT --> BG_PROJECT[プロジェクト別gitignoreの作成<br>プロジェクトディレクトリ/.gitignore]
     BG_PROJECT --> C[ドキュメント構造の設計]
 
     %% ドキュメント作成フロー
     C --> D1[要件定義書の作成<br>docs/requirements.md]
     D1 --> D2[README.mdの作成<br>docs/README.md]
 
-    %% プロジェクト固有ドキュメント
-    D2 --> E1["プロジェクト仕様書の作成<br>docs/project名/specification.md"]
-    E1 --> E2["機能一覧の作成<br>docs/project名/feature-list.md"]
+    %% 仕様書・機能一覧
+    D2 --> E1["プロジェクト仕様書の作成<br>docs/specification.md"]
+    E1 --> E2["機能一覧の作成<br>docs/feature-list.md"]
 
     %% アーキテクチャドキュメント
-    E2 --> F1[全体アーキテクチャの作成<br>docs/architecture/architecture.md]
-    F1 --> F2[全体インフラ構成の作成<br>docs/architecture/infra.md]
-    F2 --> F3["プロジェクトアーキテクチャの作成<br>docs/project名/architecture/architecture.md"]
-    F3 --> F4["DB定義の作成<br>docs/project名/architecture/db-definition.md"]
-    F4 --> F5["プロジェクトインフラ構成の作成<br>docs/project名/architecture/infra.md"]
+    E2 --> F1[（モノレポの場合のみ）全体アーキテクチャの作成<br>docs/architecture/architecture.md]
+    F1 --> F2[（モノレポの場合のみ）全体インフラ構成の作成<br>docs/architecture/infra.md]
+    F2 --> F3["プロジェクトアーキテクチャの作成<br>docs/architecture/architecture.md"]
+    F3 --> F4["DB定義の作成<br>docs/architecture/db-definition.md"]
+    F4 --> F5["プロジェクトインフラ構成の作成<br>docs/architecture/infra.md"]
 
     %% 画面設計ドキュメント
-    F5 --> G1["画面フローの作成<br>docs/project名/screens/flow.md"]
-    G1 --> G2["各画面詳細の作成<br>docs/project名/screens/画面名.md"]
+    F5 --> G1["画面フローの作成<br>docs/screens/flow.md"]
+    G1 --> G2["各画面詳細の作成<br>docs/screens/画面名.md"]
 
     %% リファレンスと最終確認
     G2 --> H1[リファレンス資料の作成<br>docs/references/]
@@ -77,49 +80,54 @@ flowchart TD
 
 ### ルート .gitignore (`./.gitignore`)
 
-    - リポジトリ全体で無視する共通ファイルを指定します。
-    - OS固有のファイル（例: `.DS_Store`, `Thumbs.db`）
-    - IDEやエディタ全体の設定ファイル（例: `.idea/` ※プロジェクトごとの設定はプロジェクト配下で管理推奨）
-    - その他、リポジトリ全体でバージョン管理対象外とするもの（例: `*.log`, `tmp/`）
+- リポジトリ全体で無視する共通ファイルを指定します。
+- OS固有のファイル（例: `.DS_Store`, `Thumbs.db`）
+- IDEやエディタ全体の設定ファイル（例: `.idea/` ※プロジェクトごとの設定はプロジェクト配下で管理推奨）
+- その他、リポジトリ全体でバージョン管理対象外とするもの（例: `*.log`, `tmp/`）
 
-### プロジェクト別 .gitignore (`{project名}/.gitignore`)
+### プロジェクト別 .gitignore (`プロジェクトディレクトリ/.gitignore`)
 
-    - 各プロジェクト固有の無視ファイルリストを作成します。
-    - プロジェクトの技術スタックに応じた無視ファイル（例: Pythonプロジェクトなら `__pycache__/`, `*.pyc`, `venv/` など）
-    - プロジェクト固有のビルド成果物（例: `build/`, `dist/`）
-    - プロジェクト固有のログファイルや一時ファイル
-    - プロジェクト固有のIDE設定ファイル（例: `.vscode/` ※ルートで全体設定を無視していない場合）
-    - プロジェクト固有の依存関係ディレクトリ（例: `node_modules/` ※プロジェクトごとに管理する場合）
+- 各プロジェクト固有の無視ファイルリストを作成します。
+- プロジェクトの技術スタックに応じた無視ファイル（例: Pythonプロジェクトなら `__pycache__/`, `*.pyc`, `venv/` など）
+- プロジェクト固有のビルド成果物（例: `build/`, `dist/`）
+- プロジェクト固有のログファイルや一時ファイル
+- プロジェクト固有のIDE設定ファイル（例: `.vscode/` ※ルートで全体設定を無視していない場合）
+- プロジェクト固有の依存関係ディレクトリ（例: `node_modules/` ※プロジェクトごとに管理する場合）
 
 ## 4. ドキュメント構造の設計
 
-    - 必要なドキュメントの種類を特定
-    - ドキュメント間の依存関係を整理
-    - ドキュメントの命名規則を決定
-    - ドキュメントのテンプレートを準備
+- 必要なドキュメントの種類を特定
+- ドキュメント間の依存関係を整理
+- ドキュメントの命名規則を決定
+- ドキュメントのテンプレートを準備
 
 ## 5. 基本ドキュメントの作成
 
 - **要件定義書 (docs/requirements.md)**
 - **README.md (docs/README.md)**
 
-## 5. プロジェクト固有ドキュメントの作成
+## 5. 仕様書・機能一覧
 
-- **仕様書 (docs/{project名}/specification.md)**
-- **機能一覧 (docs/{project名}/feature-list.md)**
+- **仕様書 (docs/specification.md)**
+- **機能一覧 (docs/feature-list.md)**
 
 ## 6. アーキテクチャドキュメントの作成
 
-- **全体アーキテクチャ (docs/architecture/architecture.md)**
-- **全体インフラ構成 (docs/architecture/infra.md)**
-- **プロジェクトアーキテクチャ (docs/{project名}/architecture/architecture.md)**
-- **DB 定義 (docs/{project名}/architecture/db-definition.md)**
-- **プロジェクトインフラ構成 (docs/{project名}/architecture/infra.md)**
+- **プロジェクトアーキテクチャ (docs/architecture/architecture.md)**
+- **DB 定義 (docs/architecture/db-definition.md)**
+- **プロジェクトインフラ構成 (docs/architecture/infra.md)**
+
+### モノレポの場合
+
+ルートディレクトリに各プロジェクトの関係を示す下記のドキュメントを配置する。
+
+- **全体アーキテクチャ (ルートディレクトリ/docs/architecture/architecture.md)**
+- **全体インフラ構成 (ルートディレクトリ/docs/architecture/infra.md)**
 
 ## 7. 画面設計ドキュメントの作成
 
-- **画面フロー (docs/{project名}/screens/flow.md)**
-- **各画面詳細 (docs/{project名}/screens/{画面名}.md)**
+- **画面フロー (docs/screens/flow.md)**
+- **各画面詳細 (docs/screens/{画面名}.md)**
 
 ## 8. リファレンス資料の作成
 
